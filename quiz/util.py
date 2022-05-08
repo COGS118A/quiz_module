@@ -44,7 +44,7 @@ def show_chosen_option(quiz_id):
             dictRecord = eval(record[i])
             if dictRecord["quiz_id"] == quiz_id:
                 chosen = True
-                print(f"Quiz: {quiz_id}, Chosen: {dictRecord["option_id"]}")
+                print(f"Quiz: {quiz_id}, Chosen: {dictRecord['option_id']}")
                 break
         if not chosen:
             print(f"Quiz: {quiz_id}, Chosen: NO RECORD FOUND")
