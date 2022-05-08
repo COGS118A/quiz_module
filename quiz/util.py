@@ -30,3 +30,27 @@ def check_quiz_answer(quiz_id, correct_answer):
                 correct = True
                 break
         assert correct, f"No attempt have made for the question: {quiz_id}"
+
+def show_chosen_option(quiz_id):
+    """
+    This is a helper method for student to check their current selection
+    of a specific quiz_id without checking the correctness of their choice.
+    """
+    chosen = False
+    with open("record.txt", "r") as f:
+        record = f.read().split("\n")
+        for i in range(len(record)-2, -1, -1):
+            # For loop from the back to check the correctness of the choice
+            dictRecord = eval(record[i])
+            if dictRecord["quiz_id"] == quiz_id:
+                chosen = True
+                print(f"Quiz: {quiz_id}, Chosen: {dictRecord["option_id"]}")
+                break
+        if not chosen:
+            print(f"Quiz: {quiz_id}, Chosen: NO RECORD FOUND")
+
+
+
+
+
+
