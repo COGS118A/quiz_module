@@ -21,9 +21,14 @@ def check_quiz_answer(quiz_id, correct_answer):
     correct = False
     with open("record.txt", "r") as f:
         record = f.read().split("\n")
-        for i in range(len(record)-2, -1, -1):
+        for i in range(len(record)-1, -1, -1):
             # For loop from the back to check the correctness of the choice
-            dictRecord = eval(record[i])
+            try:
+                dictRecord = eval(record[i])
+            except SyntaxError:
+                # make it robust to the record file that 
+                # does not properly ends with a new line.
+                continue
             if dictRecord["quiz_id"] == quiz_id:
                 correct_option_id = f"{quiz_id}-{correct_answer}"
                 assert correct_option_id == dictRecord["option_id"], f"The correct option should be: {correct_option_id}, Your Answer: {dictRecord['option_id']}"
@@ -39,9 +44,13 @@ def show_chosen_option(quiz_id):
     chosen = False
     with open("record.txt", "r") as f:
         record = f.read().split("\n")
-        for i in range(len(record)-2, -1, -1):
+        for i in range(len(record)-1, -1, -1):
             # For loop from the back to check the correctness of the choice
-            dictRecord = eval(record[i])
+            try:
+                # robust to the format of record file.
+                dictRecord = eval(record[i])
+            except SyntaxError:
+                continue
             if dictRecord["quiz_id"] == quiz_id:
                 chosen = True
                 print(f"Quiz: {quiz_id}, Chosen: {dictRecord['option_id']}")
